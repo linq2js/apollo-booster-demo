@@ -1,0 +1,99 @@
+input UpdateCourseInput {
+  name: String
+  description: String
+  startDate: String
+  endDate: String
+}
+
+input CreateCourseInput {
+  name: String!
+  description: String
+  startDate: String
+  endDate: String
+  classIds: [ID!]!
+  updatedOn: String
+}
+
+type Course {
+  id: ID!
+  name: String!
+  description: String
+  startDate: String
+  endDate: String
+  classes: [Class!]!
+  updatedOn: String
+}
+
+input UpdateClassInput {
+  courseId: ID
+  name: String
+  classDate: String
+  startTime: String
+  endTime: String
+}
+
+input CreateClassInput {
+  courseId: ID!
+  name: String!
+  classDate: String!
+  startTime: String!
+  endTime: String!
+  attendanceIds: [ID!]!
+  updatedOn: String
+}
+
+type Class {
+  id: ID!
+  course: Course!
+  name: String!
+  classDate: String!
+  startTime: String!
+  endTime: String!
+  attendances: [Attendance!]!
+  updatedOn: String
+}
+
+type Attendance {
+  id: ID!
+  class: Class!
+  user: User!
+  attended: Boolean!
+  attendanceDate: String!
+}
+
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  role: String!
+  updatedOn: String
+}
+
+# Queries
+
+type Query {
+  courses: [Course!]!
+  course(id: ID!): Course!
+  classes(courseId: ID!): [Class!]!
+  class(id: ID!): Class!
+  users: [User!]!
+  user(id: ID!): User!
+}
+
+# Mutations
+
+type Mutation {
+  createCourse(id: ID!, input: CreateCourseInput): Course!
+
+  updateCourse(id: ID!, input: UpdateCourseInput!): Course!
+
+  deleteCourse(id: ID!): Boolean!
+
+  createClass(id: ID!, input: CreateClassInput!): Class!
+
+  updateClass(id: ID!, input: UpdateClassInput!): Class!
+
+  deleteClass(id: ID!): Boolean!
+
+  markAttendance(classId: ID!, userId: ID!, attended: Boolean!): Attendance!
+}
