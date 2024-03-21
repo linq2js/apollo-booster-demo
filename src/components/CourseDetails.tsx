@@ -1,10 +1,11 @@
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { useAdapter } from "apollo-booster";
 import { JsonEditor } from "./JsonEditor";
 import { courseDetailsQuery } from "../queries/courseDetailsQuery";
 import { updateCourseMutation } from "../mutations/updateCourseMutation";
 import { UpdateCourseInput } from "../gql/graphql";
 import { useRouter } from "./Router";
+import { ClassList } from "./ClassList";
 
 export const CourseDetails = (props: { id: string }) => {
   const { pop } = useRouter();
@@ -13,16 +14,12 @@ export const CourseDetails = (props: { id: string }) => {
     courseDetailsQuery.with({ variables: { id: props.id } })
   );
   const save = async (newCourse: UpdateCourseInput) => {
-    try {
-      await mutate(
-        updateCourseMutation.with({
-          variables: { id: course.id, input: newCourse },
-        })
-      );
-      pop();
-    } catch (ex) {
-      alert(String(ex));
-    }
+    await mutate(
+      updateCourseMutation.with({
+        variables: { id: course.id, input: newCourse },
+      })
+    );
+    pop();
   };
 
   const editableProps = useMemo(() => {
@@ -30,5 +27,14 @@ export const CourseDetails = (props: { id: string }) => {
     return { name, description, startDate, endDate };
   }, [course]);
 
-  return <JsonEditor value={editableProps} onSave={save} />;
+  return (
+    <>
+      <JsonEditor value={editableProps} onSave={save} />
+      <h3>Classes</h3>
+      <em>Click to edit</em>
+      <Suspense fallback={<div>Loading classes...</div>}>
+        <ClassList courseId={course.id} />
+      </Suspense>
+    </>
+  );
 };

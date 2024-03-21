@@ -13,9 +13,11 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n  mutation UpdateClass($id: ID!, $input: UpdateClassInput!) {\n    updateClass(id: $id, input: $input) {\n      id\n      name\n      startTime\n      endTime\n    }\n  }\n": types.UpdateClassDocument,
     "\n  mutation UpdateCourse($id: ID!, $input: UpdateCourseInput!) {\n    updateCourse(id: $id, input: $input) {\n      id\n      name\n      description\n      startDate\n      endDate\n    }\n  }\n": types.UpdateCourseDocument,
+    "\n  query ClassList($courseId: ID!) {\n    classes(courseId: $courseId) {\n      id\n      name\n      classDate\n      startTime\n      endTime\n      updatedOn\n    }\n  }\n": types.ClassListDocument,
     "\n  query CourseDetails($id: ID!) {\n    course(id: $id) {\n      id\n      name\n      description\n      updatedOn\n      startDate\n      endDate\n      classes {\n        id\n        name\n      }\n    }\n  }\n": types.CourseDetailsDocument,
-    "\n  query CourseList {\n    courses {\n      id\n      name\n      description\n    }\n  }\n": types.CourseListDocument,
+    "\n  query CourseList {\n    courses {\n      id\n      name\n      updatedOn\n    }\n  }\n": types.CourseListDocument,
 };
 
 /**
@@ -35,7 +37,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function graphql(source: "\n  mutation UpdateClass($id: ID!, $input: UpdateClassInput!) {\n    updateClass(id: $id, input: $input) {\n      id\n      name\n      startTime\n      endTime\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateClass($id: ID!, $input: UpdateClassInput!) {\n    updateClass(id: $id, input: $input) {\n      id\n      name\n      startTime\n      endTime\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function graphql(source: "\n  mutation UpdateCourse($id: ID!, $input: UpdateCourseInput!) {\n    updateCourse(id: $id, input: $input) {\n      id\n      name\n      description\n      startDate\n      endDate\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateCourse($id: ID!, $input: UpdateCourseInput!) {\n    updateCourse(id: $id, input: $input) {\n      id\n      name\n      description\n      startDate\n      endDate\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query ClassList($courseId: ID!) {\n    classes(courseId: $courseId) {\n      id\n      name\n      classDate\n      startTime\n      endTime\n      updatedOn\n    }\n  }\n"): (typeof documents)["\n  query ClassList($courseId: ID!) {\n    classes(courseId: $courseId) {\n      id\n      name\n      classDate\n      startTime\n      endTime\n      updatedOn\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -43,7 +53,7 @@ export function graphql(source: "\n  query CourseDetails($id: ID!) {\n    course
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query CourseList {\n    courses {\n      id\n      name\n      description\n    }\n  }\n"): (typeof documents)["\n  query CourseList {\n    courses {\n      id\n      name\n      description\n    }\n  }\n"];
+export function graphql(source: "\n  query CourseList {\n    courses {\n      id\n      name\n      updatedOn\n    }\n  }\n"): (typeof documents)["\n  query CourseList {\n    courses {\n      id\n      name\n      updatedOn\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

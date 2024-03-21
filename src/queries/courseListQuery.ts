@@ -7,7 +7,7 @@ gql`
     courses {
       id
       name
-      description
+      updatedOn
     }
   }
 `;

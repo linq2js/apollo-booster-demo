@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 export const JsonEditor = <T,>(props: {
   value: T;
   onSave(value: T): void | Promise<void>;
+  onCancel?: VoidFunction;
 }) => {
   const [error, setError] = useState<string>();
   const [parsed, setParsed] = useState({ text: "", object: props.value });
@@ -45,7 +46,8 @@ export const JsonEditor = <T,>(props: {
           onClick={handleSave}
         >
           {loading ? "Saving..." : "Save"}
-        </button>
+        </button>{" "}
+        {props.onCancel && <button onClick={props.onCancel}>Cancel</button>}
         {error && <span style={{ color: "red" }}>{error}</span>}
       </p>
       <textarea

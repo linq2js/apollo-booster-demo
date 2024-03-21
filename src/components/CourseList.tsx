@@ -7,14 +7,17 @@ export const CourseList = () => {
   const [{ courses }] = useAdapter().use(courseListQuery);
 
   return (
-    <ul>
-      {courses.map((course) => (
-        <div key={course.id}>
-          <pre onClick={() => push("CourseDetails", { id: course.id })}>
-            {JSON.stringify(course, null, 2)}
-          </pre>
-        </div>
-      ))}
-    </ul>
+    <>
+      <em>Click to edit</em>
+      <ul>
+        {courses.map((course) => (
+          <div key={course.id}>
+            <pre onClick={() => push("CourseDetails", { id: course.id })}>
+              {JSON.stringify(course, null, 2)}
+            </pre>
+          </div>
+        ))}
+      </ul>
+    </>
   );
 };
