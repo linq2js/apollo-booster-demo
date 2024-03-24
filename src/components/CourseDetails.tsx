@@ -31,7 +31,7 @@ export const CourseDetails = (props: { id: string }) => {
     <>
       <JsonEditor value={editableProps} onSave={save} />
       <h3>Classes</h3>
-      <em>Click to edit</em>
+      <em>Click on item to edit</em>
       <Suspense fallback={<div>Loading classes...</div>}>
         <ClassList courseId={course.id} />
       </Suspense>

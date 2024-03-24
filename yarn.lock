@@ -1691,10 +1691,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-apollo-booster@^0.1.7:
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/apollo-booster/-/apollo-booster-0.1.7.tgz#83534e6bd7beb48340b134e555d461fce2dd45e7"
-  integrity sha512-3NROFQOTzFIM0ZtQG+VjLpy08492+kU+3zh3nXTnzoSnTK/WLDonUPTqoKFlrgjSkENGoqSKS2thBYGwdPiF9w==
+apollo-booster@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/apollo-booster/-/apollo-booster-0.4.2.tgz#6cf476dff3948f850df1c2c8f49ed73738444f39"
+  integrity sha512-Pnegyor33ZEFI/NlHpqZPEEzje1ILn0hJyAWhmNl8tWR77FTmvplZpt0JTeHYj6EO2hGy6dN1DTxTqHJ8/HIoA==
 
 argparse@^2.0.1:
   version "2.0.1"

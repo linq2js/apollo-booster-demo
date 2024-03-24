@@ -72,11 +72,12 @@ type User {
 # Queries
 
 type Query {
-  courses: [Course!]!
+  courses(offset: Int, limit: Int): [Course!]!
+  classes(courseId: ID!, offset: Int, limit: Int): [Class!]!
+  users(offset: Int, limit: Int): [User!]!
+
   course(id: ID!): Course!
-  classes(courseId: ID!): [Class!]!
   class(id: ID!): Class!
-  users: [User!]!
   user(id: ID!): User!
 }
 

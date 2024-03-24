@@ -4,11 +4,18 @@ import { useRouter } from "./Router";
 
 export const CourseList = () => {
   const { push } = useRouter();
-  const [{ courses }] = useAdapter().use(courseListQuery);
+  const { use, refetch } = useAdapter();
+  const [{ courses }] = use(courseListQuery);
 
   return (
     <>
-      <em>Click to edit</em>
+      <p>
+        <button onClick={() => refetch(courseListQuery)}>Refetch</button>
+        <button onClick={() => refetch(courseListQuery, true)}>
+          Hard Refetch
+        </button>
+      </p>
+      <em>Click on item to edit</em>
       <ul>
         {courses.map((course) => (
           <div key={course.id}>

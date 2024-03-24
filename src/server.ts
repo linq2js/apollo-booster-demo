@@ -1,15 +1,49 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { faker } from "@faker-js/faker";
-import { createGraphQLHandler } from "@miragejs/graphql";
+import {
+  createGraphQLHandler,
+  mirageGraphQLFieldResolver,
+} from "@miragejs/graphql";
 import { createServer } from "miragejs";
 import graphQLSchema from "./schema.gql";
+import { Resolver } from "@apollo/client";
+
+export const paginationResolver = (
+  defaultValues: { offset?: number; limit?: number } = {}
+): Resolver => {
+  return async (
+    parent,
+    {
+      offset = defaultValues.offset ?? 0,
+      limit = defaultValues.limit ?? Number.MAX_VALUE,
+      ...args
+    }: any = {},
+    context,
+    info
+  ) => {
+    const results = await mirageGraphQLFieldResolver(
+      parent,
+      args,
+      context,
+      info
+    );
+    if (Array.isArray(results)) {
+      return results.slice(offset, offset + limit);
+    }
+    return results;
+  };
+};
 
 createServer({
   routes() {
     const handler = createGraphQLHandler(graphQLSchema, this.schema, {
       context: null,
       root: null,
-      resolvers: {},
+      resolvers: {
+        Query: {
+          classes: paginationResolver({ limit: 3 }),
+        },
+      },
     });
     this.post("/graphql", async (...args) => {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -75,9 +109,9 @@ createServer({
       );
     }
 
-    const courses = generateCourses(10);
+    const courses = generateCourses(3);
     const classes = generateClasses(
-      30,
+      50,
       courses.map((course) => course.id)
     );
     const users = generateUsers(50);
